@@ -111,6 +111,20 @@
             transform: translateY(-2px);
             box-shadow: 0 10px 40px rgba(249, 115, 22, 0.3);
         }
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+        }
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--text-secondary);
+        }
 
         /* Hero */
         .hero {
@@ -120,77 +134,352 @@
             justify-content: center;
             padding: 8rem 5% 5rem;
             text-align: center;
+            position: relative;
         }
-        .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4rem);
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 50% 50%, rgba(249, 115, 22, 0.1) 0%, transparent 50%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        .hero-content {
+            max-width: 900px;
+            position: relative;
+            z-index: 1;
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+        }
+        .badge::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: #22c55e;
+            border-radius: 50%;
+            animation: blink 2s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        h1 {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
             font-weight: 700;
+            line-height: 1.1;
             margin-bottom: 1.5rem;
         }
         .gradient-text {
-            background: linear-gradient(135deg, #f97316, #ec4899);
+            background: linear-gradient(135deg, var(--accent), #ec4899);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .hero-subtitle {
             color: var(--text-secondary);
-            font-size: 1.25rem;
+            font-size: clamp(1.1rem, 2vw, 1.35rem);
             max-width: 600px;
             margin: 0 auto 2rem;
         }
-
-        /* How it Works Diagram */
-        .how-it-works {
-            padding: 4rem 5%;
-            background: var(--bg-secondary);
-        }
-        .how-it-works h2 {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-        .workflow-diagram {
+        .hero-buttons {
             display: flex;
+            gap: 1rem;
             justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Timeline Preview */
+        .timeline-preview {
+            margin-top: 4rem;
+            padding: 2rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            position: relative;
+        }
+        .timeline-header {
+            display: flex;
             align-items: center;
             gap: 1rem;
-            flex-wrap: wrap;
-            max-width: 900px;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .timeline-ruler {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+        .timeline-track-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .timeline-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            height: 32px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            padding: 0 0.5rem;
+            position: relative;
+        }
+        .timeline-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            width: 60px;
+            text-align: right;
+        }
+        .timeline-clips {
+            display: flex;
+            gap: 2px;
+            flex: 1;
+            height: 100%;
+            align-items: center;
+        }
+        .clip {
+            height: 24px;
+            border-radius: 3px;
+        }
+        .clip.a-roll { background: linear-gradient(90deg, #f97316, #ea580c); width: 40%; }
+        .clip.b-roll { background: linear-gradient(90deg, #06b6d4, #0891b2); width: 25%; margin-left: 5%; }
+        .clip.audio { background: linear-gradient(90deg, #8b5cf6, #7c3aed); width: 60%; height: 16px; }
+        .playhead {
+            position: absolute;
+            left: 45%;
+            top: 0; bottom: 0;
+            width: 2px;
+            background: #22c55e;
+            z-index: 10;
+        }
+        .playhead::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -5px;
+            width: 0; height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 8px solid #22c55e;
+        }
+
+        /* Problem Section */
+        .problem {
+            padding: 6rem 5%;
+            background: var(--bg-secondary);
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+        .section-label {
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+        h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
             margin: 0 auto;
         }
-        .workflow-step-box {
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+        .problem-card {
             background: var(--bg-tertiary);
             border: 1px solid var(--border);
             border-radius: 1rem;
             padding: 2rem;
             text-align: center;
-            min-width: 200px;
-            flex: 1;
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
         }
-        .workflow-step-box:hover {
-            border-color: var(--accent);
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), #ec4899);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .problem-card:hover {
             transform: translateY(-5px);
+            border-color: var(--accent);
         }
-        .workflow-icon {
-            font-size: 2.5rem;
+        .problem-card:hover::before { opacity: 1; }
+        .problem-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+        .problem-card h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; }
+        .problem-card p { color: var(--text-secondary); font-size: 0.95rem; }
+
+        /* Solution */
+        .solution {
+            padding: 6rem 5%;
+        }
+        .solution-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        .solution-text h2 { margin-bottom: 1.5rem; }
+        .solution-text p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        .feature-list { list-style: none; }
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
             margin-bottom: 1rem;
         }
-        .workflow-step-box h3 {
-            font-size: 1.1rem;
+        .feature-list li::before {
+            content: '✓';
+            background: linear-gradient(135deg, var(--accent), #ec4899);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .solution-visual {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 3rem;
+        }
+        .workflow-step {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s;
+        }
+        .workflow-step:hover {
+            border-color: var(--accent);
+            transform: translateX(5px);
+        }
+        .step-number {
+            background: linear-gradient(135deg, var(--accent), #ec4899);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .workflow-step h4 { font-weight: 600; margin-bottom: 0.25rem; }
+        .workflow-step p { color: var(--text-secondary); font-size: 0.9rem; }
+
+        /* Features */
+        .features {
+            padding: 6rem 5%;
+            background: var(--bg-secondary);
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+        .feature-card {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            padding: 2.5rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), #ec4899);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+        .feature-card:hover::after { transform: scaleX(1); }
+        .feature-icon { font-size: 2.5rem; margin-bottom: 1.5rem; }
+        .feature-card h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 1rem; }
+        .feature-card p { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.7; }
+
+        /* Proof */
+        .proof {
+            padding: 6rem 5%;
+        }
+        .proof-card {
+            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+            border: 1px solid var(--border);
+            border-radius: 1.5rem;
+            padding: 4rem;
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 3rem;
+            margin: 3rem 0;
+        }
+        .stat-item h3 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--accent), #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin-bottom: 0.5rem;
         }
-        .workflow-step-box p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        .workflow-arrow {
-            font-size: 2rem;
-            color: var(--accent);
-        }
-        @media (max-width: 768px) {
-            .workflow-arrow { transform: rotate(90deg); }
-        }
+        .stat-item p { color: var(--text-secondary); font-size: 0.95rem; }
 
-        /* Creator Section */
+        /* Creator */
         .creator {
             padding: 4rem 5%;
             background: var(--bg-primary);
@@ -211,36 +500,23 @@
             border: 3px solid var(--accent);
             object-fit: cover;
         }
-        .creator-info {
-            text-align: left;
-        }
-        .creator-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-        }
+        .creator-info { text-align: left; }
+        .creator-info h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
         .creator-info .role {
             color: var(--accent);
             font-weight: 600;
             margin-bottom: 1rem;
         }
-        .creator-info p {
-            color: var(--text-secondary);
-            margin-bottom: 1rem;
-        }
-        .creator-social {
-            display: flex;
-            gap: 1rem;
-        }
+        .creator-info p { color: var(--text-secondary); margin-bottom: 1rem; }
+        .creator-social { display: flex; gap: 1rem; }
         .creator-social a {
             color: var(--text-secondary);
             text-decoration: none;
             transition: color 0.3s;
         }
-        .creator-social a:hover {
-            color: var(--accent);
-        }
+        .creator-social a:hover { color: var(--accent); }
 
-        /* Form Section */
+        /* Form */
         .form-section {
             background: var(--bg-secondary);
             padding: 4rem 5%;
@@ -316,7 +592,11 @@
         }
 
         /* Footer */
-        footer { padding: 3rem 5%; border-top: 1px solid var(--border); text-align: center; }
+        footer {
+            padding: 3rem 5%;
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
         .footer-links {
             display: flex;
             justify-content: center;
@@ -332,8 +612,17 @@
         .footer-links a:hover { color: var(--accent); }
         footer p { color: var(--text-muted); font-size: 0.85rem; }
 
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .problem-grid, .features-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
         @media (max-width: 768px) {
             .nav-links { display: none; }
+            .solution-content { grid-template-columns: 1fr; }
+            .stats { grid-template-columns: 1fr; gap: 2rem; }
+            .hero-buttons { flex-direction: column; }
+            .timeline-preview { display: none; }
+            .problem-grid, .features-grid { grid-template-columns: 1fr !important; }
             .creator-content { text-align: center; }
             .creator-info { text-align: center; }
             .creator-social { justify-content: center; }
@@ -353,7 +642,9 @@
     <nav>
         <div class="logo">EditFlow</div>
         <div class="nav-links">
-            <a href="#como-funciona">Cómo funciona</a>
+            <a href="#problema">El Problema</a>
+            <a href="#solucion">Solución</a>
+            <a href="#caracteristicas">Ventajas</a>
             <a href="#creador">Creador</a>
             <a href="#acceso" class="btn-primary">Solicitar Acceso</a>
         </div>
@@ -361,7 +652,8 @@
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="container">
+        <div class="hero-content">
+            <div class="badge">Versión Alpha Privada Disponible</div>
             <h1>
                 Edita vídeos <span class="gradient-text">10x más rápido</span>.<br>
                 Sin abandonar DaVinci Resolve.
@@ -370,44 +662,173 @@
                 El primer editor de vídeo con IA que se integra completamente en DaVinci Resolve. 
                 Automatiza el corte inicial mientras tú te centras en lo creativo.
             </p>
-            <a href="#acceso" class="btn-primary">Unirme a la alpha</a>
+            <div class="hero-buttons">
+                <a href="#acceso" class="btn-primary">Unirme a la alpha</a>
+                <a href="#solucion" class="btn-secondary">Ver cómo funciona</a>
+            </div>
+
+            <!-- Timeline Preview -->
+            <div class="timeline-preview">
+                <div class="timeline-header">
+                    <span>📹 A-Roll</span>
+                    <span>🎬 B-Roll</span>
+                    <span>🔊 Audio</span>
+                </div>
+                <div class="timeline-ruler">
+                    <span>00:00</span>
+                    <span>00:15</span>
+                    <span>00:30</span>
+                    <span>00:45</span>
+                    <span>01:00</span>
+                </div>
+                <div class="timeline-track-container">
+                    <div class="timeline-row">
+                        <span class="timeline-label">V1</span>
+                        <div class="timeline-clips"><div class="clip a-roll"></div></div>
+                        <div class="playhead"></div>
+                    </div>
+                    <div class="timeline-row">
+                        <span class="timeline-label">V2</span>
+                        <div class="timeline-clips"><div class="clip b-roll"></div></div>
+                    </div>
+                    <div class="timeline-row">
+                        <span class="timeline-label">A1</span>
+                        <div class="timeline-clips"><div class="clip audio"></div></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- How it Works Diagram -->
-    <section class="how-it-works" id="como-funciona">
+    <!-- Problem Section -->
+    <section class="problem" id="problema">
         <div class="container">
-            <h2>Cómo funciona</h2>
-            <div class="workflow-diagram">
-                <div class="workflow-step-box">
-                    <div class="workflow-icon">📁</div>
-                    <h3>1. Importa</h3>
-                    <p>Arrastra tus clips al panel de EditFlow en DaVinci Resolve</p>
+            <div class="section-header">
+                <p class="section-label">El Problema</p>
+                <h2>La edición te consume el 80% del tiempo de producción</h2>
+                <p class="section-subtitle">Los editores perdemos horas en tareas repetitivas que no aportan valor creativo.</p>
+            </div>
+            <div class="problem-grid">
+                <div class="problem-card">
+                    <div class="problem-icon">⏱️</div>
+                    <h3>Revisar material crudo</h3>
+                    <p>Horas buscando soundbites de valor en horas de grabación</p>
                 </div>
-                
-                <div class="workflow-arrow">→</div>
-                
-                <div class="workflow-step-box">
-                    <div class="workflow-icon">🧠</div>
-                    <h3>2. Analiza</h3>
-                    <p>La IA identifica momentos clave, soundbites y contenido visual</p>
+                <div class="problem-card">
+                    <div class="problem-icon">✂️</div>
+                    <h3>Cortes manuales</h3>
+                    <p>Eliminar pausas, muletillas y silencios uno a uno</p>
                 </div>
-                
-                <div class="workflow-arrow">→</div>
-                
-                <div class="workflow-step-box">
-                    <div class="workflow-icon">✨</div>
-                    <h3>3. Genera</h3>
-                    <p>Crea automáticamente un timeline editado según tu objetivo</p>
+                <div class="problem-card">
+                    <div class="problem-icon">📱</div>
+                    <h3>Versiones para cada plataforma</h3>
+                    <p>Crear Instagram, YouTube, TikTok desde cero cada vez</p>
                 </div>
-                
-                <div class="workflow-arrow">→</div>
-                
-                <div class="workflow-step-box">
-                    <div class="workflow-icon">🎬</div>
-                    <h3>4. Refina</h3>
-                    <p>Tú te centras en color, sonido y toques creativos finales</p>
+                <div class="problem-card">
+                    <div class="problem-icon">😰</div>
+                    <h3>Burnout creativo</h3>
+                    <p>Menos proyectos, menos ingresos, más frustración</p>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Solution Section -->
+    <section class="solution" id="solucion">
+        <div class="container">
+            <div class="solution-content">
+                <div class="solution-text">
+                    <p class="section-label">La Solución</p>
+                    <h2>Tu asistente de edición dentro de Resolve</h2>
+                    <p>EditFlow analiza tu material, entiende el contenido hablado y visual, y construye automáticamente un timeline editado siguiendo tus reglas editoriales.</p>
+                    <ul class="feature-list">
+                        <li>Transcripción optimizada para español</li>
+                        <li>Análisis visual de talking heads y movimiento</li>
+                        <li>Selección inteligente de soundbites</li>
+                        <li>B-roll contextual automático</li>
+                    </ul>
+                </div>
+                <div class="solution-visual">
+                    <div class="workflow-step">
+                        <div class="step-number">1</div>
+                        <div>
+                            <h4>Selecciona objetivo</h4>
+                            <p>Instagram, YouTube, o custom</p>
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">2</div>
+                        <div>
+                            <h4>Añade brief editorial</h4>
+                            <p>Guía al modelo (opcional)</p>
+                        </div>
+                    </div>
+                    <div class="workflow-step">
+                        <div class="step-number">3</div>
+                        <div>
+                            <h4>Genera timeline</h4>
+                            <p>Listo para color y sonido</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="caracteristicas">
+        <div class="container">
+            <div class="section-header">
+                <p class="section-label">Ventajas Clave</p>
+                <h2>Diseñado para editores profesionales</h2>
+                <p class="section-subtitle">Tecnología de punta que respeta tu flujo de trabajo y tu privacidad.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">🏠</span>
+                    <h3>100% Local</h3>
+                    <p>Tu material nunca sale de tu máquina. Sin subir vídeos a la nube, sin depender de conexión, privacidad total para clientes sensibles.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🎬</span>
+                    <h3>Integración Nativa</h3>
+                    <p>No aprendes nueva interfaz. Panel integrado en DaVinci Resolve Workflow Integrations. Exporta directamente a tu flujo de color y audio.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">🧠</span>
+                    <h3>IA Multimodal Real</h3>
+                    <p><strong>Oye:</strong> Whisper optimizado para español.<br><strong>Ve:</strong> Análisis visual con Qwen VL.<br><strong>Piensa:</strong> DeepSeek para coherencia narrativa.</p>
+                </div>
+                <div class="feature-card">
+                    <span class="feature-icon">⚡</span>
+                    <h3>Ahorro Medible</h3>
+                    <p>De 3-4 horas a 20-30 minutos en corte inicial. Más tiempo para color, sonido y creatividad. Más proyectos por mes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proof Section -->
+    <section class="proof">
+        <div class="container">
+            <div class="proof-card">
+                <p class="section-label">Caso Real</p>
+                <h2>De 150 clips a timeline en 8 minutos</h2>
+                <div class="stats">
+                    <div class="stat-item">
+                        <h3>45min</h3>
+                        <p>Material de entrada</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>8min</h3>
+                        <p>Proceso completo</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>~3h</h3>
+                        <p>Tiempo ahorrado</p>
+                    </div>
+                </div>
+                <p style="color: var(--text-secondary);">Entrevista completa + 15 fotos de B-roll → Timeline de 8 minutos listo para color y sonido.</p>
             </div>
         </div>
     </section>
@@ -417,12 +838,10 @@
         <div class="container">
             <div class="creator-content">
                 <img src="https://ml9srjqqzazi.i.optimole.com/w:512/h:512/q:mauto/f:best/ig:avif/https://tufotoyvideopromocional.es/wp-content/uploads/2026/01/perfil-amartinro-3.png" alt="Alberto Martín" class="creator-avatar" onerror="this.src='https://ui-avatars.com/api/?name=Alberto+Martin&background=f97316&color=fff&size=150'">
-                
                 <div class="creator-info">
                     <h3>Alberto Martín</h3>
                     <div class="role">Creador de EditFlow AI</div>
                     <p>Editor de vídeo profesional con más de 10 años de experiencia en producción audiovisual. Desarrollé EditFlow para automatizar las tareas repetitivas y devolver el tiempo creativo a los editores.</p>
-                    
                     <div class="creator-social">
                         <a href="https://instagram.com/amartinro" target="_blank">📷 @amartinro</a>
                         <a href="mailto:a.martinro@gmail.com">✉️ a.martinro@gmail.com</a>
@@ -432,13 +851,13 @@
         </div>
     </section>
 
-    <!-- CTA Section with Form -->
+    <!-- Form Section -->
     <section class="form-section" id="acceso">
         <div class="container">
             <h2>Recupera horas de edición cada semana</h2>
             <p>Únete a la alpha privada. Acceso prioritario para los primeros editores profesionales.</p>
             
-            <form class="email-form" id="alphaForm" action="https://formsubmit.co/ajax/a.martinro@gmail.com" method="POST">
+            <form class="email-form" id="betaForm" action="https://formsubmit.co/ajax/a.martinro@gmail.com" method="POST">
                 <div class="form-group">
                     <label>Nombre completo *</label>
                     <input type="text" name="nombre" placeholder="Tu nombre" required>
@@ -485,17 +904,16 @@
                     </label>
                 </div>
 
-                <input type="hidden" name="_subject" value="🎬 Nueva solicitud EditFlow alpha">
+                <input type="hidden" name="_subject" value="🎬 Nueva solicitud EditFlow Alpha">
                 <input type="hidden" name="_captcha" value="false">
 
                 <button type="submit" class="btn-primary">Solicitar acceso a la alpha</button>
             </form>
 
-            <!-- Success Message (shown after form submission) -->
             <div class="success-message" id="successMsg">
                 <h3>🎉 ¡Gracias por tu interés!</h3>
                 <p>Hemos recibido tu solicitud correctamente. Nuestro equipo revisará tu perfil y nos pondremos en contacto contigo en las próximas 24-48 horas con acceso a la alpha privada.</p>
-                <button onclick="document.getElementById('successMsg').classList.remove('show'); window.scrollTo({top:0,behavior:'smooth'});" class="btn-primary">Volver al inicio</button>
+                <button onclick="document.getElementById('successMsg').classList.remove('show'); document.getElementById('betaForm').style.display='flex'; window.scrollTo({top:0,behavior:'smooth'});" class="btn-primary">Volver al formulario</button>
             </div>
         </div>
     </section>
@@ -511,52 +929,29 @@
     </footer>
 
     <script>
-        // Form submission with AJAX (no redirect)
-        document.getElementById('alphaForm').addEventListener('submit', function(e) {
+        document.getElementById('betaForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
             if (!document.getElementById('privacidad').checked) {
                 alert('Por favor, acepta la política de privacidad.');
                 return;
             }
-
             const form = this;
             const formData = new FormData(form);
-            
-            fetch(form.action, {
-                method: 'POST',
-                body: formData
-            })
+            fetch(form.action, { method: 'POST', body: formData })
             .then(response => {
                 if (response.ok) {
-                    // Hide form and show success message
                     form.style.display = 'none';
                     document.getElementById('successMsg').classList.add('show');
-                    
-                    // Scroll to success message
                     document.getElementById('successMsg').scrollIntoView({ behavior: 'smooth' });
                 } else {
-                    alert('Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.');
+                    alert('Hubo un error al enviar el formulario.');
                 }
             })
             .catch(error => {
                 console.error('Error:', error);
-                alert('Hubo un error al enviar el formulario. Por favor, inténtalo de nuevo.');
+                alert('Hubo un error al enviar el formulario.');
             });
         });
     </script>
 </body>
 </html>
-<style>
-/* Responsive grids: 4 cols desktop, 2 cols tablet, 1 col mobile */
-@media (max-width: 1024px) {
-    .problem-grid, .features-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-    }
-}
-@media (max-width: 768px) {
-    .problem-grid, .features-grid {
-        grid-template-columns: 1fr !important;
-    }
-}
-</style>
