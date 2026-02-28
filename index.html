@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClipForge AI — Edición de vídeo potenciada por IA</title>
+    <title>EditFlow AI — Edición de vídeo potenciada por IA</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -22,15 +22,8 @@
             --gradient-end: #ec4899;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
@@ -40,6 +33,61 @@
             overflow-x: hidden;
         }
 
+        /* Timeline Background Animation */
+        .timeline-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.03;
+        }
+
+        .timeline-track {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent), transparent);
+            animation: timelineMove 20s linear infinite;
+        }
+
+        .timeline-track:nth-child(1) { top: 20%; width: 60%; animation-delay: 0s; }
+        .timeline-track:nth-child(2) { top: 40%; width: 40%; animation-delay: -5s; }
+        .timeline-track:nth-child(3) { top: 60%; width: 80%; animation-delay: -10s; }
+        .timeline-track:nth-child(4) { top: 80%; width: 50%; animation-delay: -15s; }
+
+        @keyframes timelineMove {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(200%); }
+        }
+
+        /* Film Strip Decoration */
+        .film-strip {
+            position: absolute;
+            width: 120px;
+            height: 80px;
+            border: 2px solid var(--border);
+            background: var(--bg-secondary);
+            opacity: 0.1;
+            border-radius: 4px;
+        }
+
+        .film-strip::before, .film-strip::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 8px;
+            background: repeating-linear-gradient(90deg, var(--border) 0px, var(--border) 6px, transparent 6px, transparent 12px);
+        }
+
+        .film-strip::before { top: -2px; }
+        .film-strip::after { bottom: -2px; }
+        .film-strip.left { left: -60px; top: 30%; transform: rotate(-15deg); }
+        .film-strip.right { right: -60px; top: 60%; transform: rotate(15deg); }
+
+        /* Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -49,7 +97,7 @@
             justify-content: space-between;
             align-items: center;
             z-index: 1000;
-            background: rgba(10, 10, 10, 0.8);
+            background: rgba(10, 10, 10, 0.9);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border);
         }
@@ -61,6 +109,18 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 2px;
+            transform: rotate(45deg);
         }
 
         .nav-links {
@@ -77,13 +137,11 @@
             transition: color 0.3s;
         }
 
-        .nav-links a:hover {
-            color: var(--text-primary);
-        }
+        .nav-links a:hover { color: var(--text-primary); }
 
         .btn-primary {
             background: var(--accent);
-            color: white;
+            color: white !important;
             padding: 0.75rem 1.5rem;
             border-radius: 0.5rem;
             font-weight: 600;
@@ -91,6 +149,8 @@
             transition: all 0.3s;
             border: none;
             cursor: pointer;
+            display: inline-flex;
+            align-items: center;
         }
 
         .btn-primary:hover {
@@ -109,6 +169,8 @@
             border: 1px solid var(--border);
             transition: all 0.3s;
             cursor: pointer;
+            display: inline-flex;
+            align-items: center;
         }
 
         .btn-secondary:hover {
@@ -116,6 +178,7 @@
             border-color: var(--text-secondary);
         }
 
+        /* Hero Section */
         .hero {
             min-height: 100vh;
             display: flex;
@@ -206,6 +269,111 @@
             flex-wrap: wrap;
         }
 
+        /* Timeline Preview */
+        .timeline-preview {
+            margin-top: 4rem;
+            padding: 2rem;
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .timeline-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .timeline-ruler {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-track-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .timeline-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            height: 32px;
+            background: var(--bg-secondary);
+            border-radius: 4px;
+            padding: 0 0.5rem;
+            position: relative;
+        }
+
+        .timeline-label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            width: 60px;
+            text-align: right;
+        }
+
+        .timeline-clips {
+            display: flex;
+            gap: 2px;
+            flex: 1;
+            height: 100%;
+            align-items: center;
+        }
+
+        .clip {
+            height: 24px;
+            border-radius: 3px;
+            position: relative;
+        }
+
+        .clip.a-roll {
+            background: linear-gradient(90deg, #f97316, #ea580c);
+            width: 40%;
+        }
+
+        .clip.b-roll {
+            background: linear-gradient(90deg, #06b6d4, #0891b2);
+            width: 25%;
+            margin-left: 5%;
+        }
+
+        .clip.audio {
+            background: linear-gradient(90deg, #8b5cf6, #7c3aed);
+            width: 60%;
+            height: 16px;
+        }
+
+        .playhead {
+            position: absolute;
+            left: 45%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #22c55e;
+            z-index: 10;
+        }
+
+        .playhead::before {
+            content: '';
+            position: absolute;
+            top: -6px;
+            left: -5px;
+            width: 0;
+            height: 0;
+            border-left: 6px solid transparent;
+            border-right: 6px solid transparent;
+            border-top: 8px solid #22c55e;
+        }
+
         .problem {
             padding: 6rem 5%;
             background: var(--bg-secondary);
@@ -256,12 +424,28 @@
             padding: 2rem;
             text-align: center;
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+            opacity: 0;
+            transition: opacity 0.3s;
         }
 
         .problem-card:hover {
             transform: translateY(-5px);
             border-color: var(--accent);
         }
+
+        .problem-card:hover::before { opacity: 1; }
 
         .problem-icon {
             font-size: 2.5rem;
@@ -281,6 +465,7 @@
 
         .solution {
             padding: 6rem 5%;
+            position: relative;
         }
 
         .solution-content {
@@ -290,9 +475,7 @@
             align-items: center;
         }
 
-        .solution-text h2 {
-            margin-bottom: 1.5rem;
-        }
+        .solution-text h2 { margin-bottom: 1.5rem; }
 
         .solution-text p {
             color: var(--text-secondary);
@@ -300,9 +483,7 @@
             margin-bottom: 2rem;
         }
 
-        .feature-list {
-            list-style: none;
-        }
+        .feature-list { list-style: none; }
 
         .feature-list li {
             display: flex;
@@ -358,6 +539,12 @@
             display: flex;
             align-items: center;
             gap: 1rem;
+            transition: all 0.3s;
+        }
+
+        .workflow-step:hover {
+            border-color: var(--accent);
+            transform: translateX(5px);
         }
 
         .step-number {
@@ -401,6 +588,20 @@
             border-radius: 1rem;
             padding: 2.5rem;
             transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+            transform: scaleX(0);
+            transition: transform 0.3s;
         }
 
         .feature-card:hover {
@@ -408,6 +609,8 @@
             border-color: var(--accent);
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
         }
+
+        .feature-card:hover::after { transform: scaleX(1); }
 
         .feature-icon {
             font-size: 2.5rem;
@@ -484,11 +687,10 @@
             padding: 6rem 5%;
             background: var(--bg-secondary);
             text-align: center;
+            position: relative;
         }
 
-        .cta h2 {
-            margin-bottom: 1rem;
-        }
+        .cta h2 { margin-bottom: 1rem; }
 
         .cta p {
             color: var(--text-secondary);
@@ -519,13 +721,9 @@
             transition: border-color 0.3s;
         }
 
-        .email-form input:focus {
-            border-color: var(--accent);
-        }
+        .email-form input:focus { border-color: var(--accent); }
 
-        .email-form input::placeholder {
-            color: var(--text-muted);
-        }
+        .email-form input::placeholder { color: var(--text-muted); }
 
         .success-message {
             display: none;
@@ -537,9 +735,7 @@
             margin-top: 1rem;
         }
 
-        .success-message.show {
-            display: block;
-        }
+        .success-message.show { display: block; }
 
         footer {
             padding: 3rem 5%;
@@ -553,37 +749,14 @@
         }
 
         @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-
-            .solution-content {
-                grid-template-columns: 1fr;
-            }
-
-            .stats {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .hero-buttons {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            .hero-buttons .btn-primary,
-            .hero-buttons .btn-secondary {
-                width: 100%;
-            }
-
-            .email-form {
-                flex-direction: column;
-            }
-
-            .email-form input,
-            .email-form button {
-                width: 100%;
-            }
+            .nav-links { display: none; }
+            .solution-content { grid-template-columns: 1fr; }
+            .stats { grid-template-columns: 1fr; gap: 2rem; }
+            .hero-buttons { flex-direction: column; width: 100%; }
+            .hero-buttons .btn-primary, .hero-buttons .btn-secondary { width: 100%; }
+            .email-form { flex-direction: column; }
+            .email-form input, .email-form button { width: 100%; }
+            .timeline-preview { display: none; }
         }
 
         .fade-in {
@@ -599,8 +772,18 @@
     </style>
 </head>
 <body>
+    <div class="timeline-bg">
+        <div class="timeline-track"></div>
+        <div class="timeline-track"></div>
+        <div class="timeline-track"></div>
+        <div class="timeline-track"></div>
+    </div>
+
+    <div class="film-strip left"></div>
+    <div class="film-strip right"></div>
+
     <nav>
-        <div class="logo">ClipForge</div>
+        <div class="logo">EditFlow</div>
         <div class="nav-links">
             <a href="#problem">El Problema</a>
             <a href="#solucion">Solución</a>
@@ -623,6 +806,42 @@
             </p>
             <div class="hero-buttons">
                 <a href="#acceso" class="btn-primary">Unirme a la beta</a>
+            </div>
+
+            <div class="timeline-preview">
+                <div class="timeline-header">
+                    <span>📹 A-Roll</span>
+                    <span>🎬 B-Roll</span>
+                    <span>🔊 Audio</span>
+                </div>
+                <div class="timeline-ruler">
+                    <span>00:00</span>
+                    <span>00:15</span>
+                    <span>00:30</span>
+                    <span>00:45</span>
+                    <span>01:00</span>
+                </div>
+                <div class="timeline-track-container">
+                    <div class="timeline-row">
+                        <span class="timeline-label">V1</span>
+                        <div class="timeline-clips">
+                            <div class="clip a-roll"></div>
+                        </div>
+                        <div class="playhead"></div>
+                    </div>
+                    <div class="timeline-row">
+                        <span class="timeline-label">V2</span>
+                        <div class="timeline-clips">
+                            <div class="clip b-roll"></div>
+                        </div>
+                    </div>
+                    <div class="timeline-row">
+                        <span class="timeline-label">A1</span>
+                        <div class="timeline-clips">
+                            <div class="clip audio"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -666,7 +885,7 @@
                     <p class="section-label">La Solución</p>
                     <h2>Tu asistente de edición dentro de Resolve</h2>
                     <p>
-                        ClipForge analiza tu material, entiende el contenido hablado y visual, 
+                        EditFlow analiza tu material, entiende el contenido hablado y visual, 
                         y construye automáticamente un timeline editado siguiendo tus reglas editoriales.
                     </p>
                     <ul class="feature-list">
@@ -769,7 +988,7 @@
             <p>Únete a la beta privada. Acceso prioritario para los primeros editores profesionales.</p>
             <form class="email-form" action="https://formspree.io/f/xkggzygo" method="POST">
                 <input type="email" name="email" placeholder="tu@email.com" required>
-                <input type="hidden" name="_subject" value="Nuevo registro - ClipForge Beta">
+                <input type="hidden" name="_subject" value="Nuevo registro - EditFlow Beta">
                 <input type="hidden" name="_replyto" value="%email%">
                 <button type="submit" class="btn-primary">Solicitar acceso</button>
             </form>
@@ -780,10 +999,11 @@
     </section>
 
     <footer>
-        <p>© 2026 ClipForge AI. Diseñado para editores profesionales.</p>
+        <p>© 2026 EditFlow AI. Diseñado para editores profesionales.</p>
     </footer>
 
     <script>
+        // Scroll animations
         const observerOptions = {
             threshold: 0.1,
             rootMargin: '0px 0px -50px 0px'
@@ -801,6 +1021,7 @@
             observer.observe(el);
         });
 
+        // Smooth scroll for navigation
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
