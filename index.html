@@ -370,7 +370,7 @@
                 El primer editor de vídeo con IA que se integra completamente en DaVinci Resolve. 
                 Automatiza el corte inicial mientras tú te centras en lo creativo.
             </p>
-            <a href="#acceso" class="btn-primary">Unirme a la beta</a>
+            <a href="#acceso" class="btn-primary">Unirme a la alpha</a>
         </div>
     </section>
 
@@ -416,7 +416,7 @@
     <section class="creator" id="creador">
         <div class="container">
             <div class="creator-content">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=300&fit=crop&crop=face" alt="Alberto Martín" class="creator-avatar" onerror="this.src='https://ui-avatars.com/api/?name=Alberto+Martin&background=f97316&color=fff&size=150'">
+                <img src="https://ml9srjqqzazi.i.optimole.com/w:512/h:512/q:mauto/f:best/ig:avif/https://tufotoyvideopromocional.es/wp-content/uploads/2026/01/perfil-amartinro-3.png" alt="Alberto Martín" class="creator-avatar" onerror="this.src='https://ui-avatars.com/api/?name=Alberto+Martin&background=f97316&color=fff&size=150'">
                 
                 <div class="creator-info">
                     <h3>Alberto Martín</h3>
@@ -436,9 +436,9 @@
     <section class="form-section" id="acceso">
         <div class="container">
             <h2>Recupera horas de edición cada semana</h2>
-            <p>Únete a la beta privada. Acceso prioritario para los primeros editores profesionales.</p>
+            <p>Únete a la alpha privada. Acceso prioritario para los primeros editores profesionales.</p>
             
-            <form class="email-form" id="betaForm" action="https://formsubmit.co/ajax/a.martinro@gmail.com" method="POST">
+            <form class="email-form" id="alphaForm" action="https://formsubmit.co/ajax/a.martinro@gmail.com" method="POST">
                 <div class="form-group">
                     <label>Nombre completo *</label>
                     <input type="text" name="nombre" placeholder="Tu nombre" required>
@@ -485,16 +485,16 @@
                     </label>
                 </div>
 
-                <input type="hidden" name="_subject" value="🎬 Nueva solicitud EditFlow Beta">
+                <input type="hidden" name="_subject" value="🎬 Nueva solicitud EditFlow alpha">
                 <input type="hidden" name="_captcha" value="false">
 
-                <button type="submit" class="btn-primary">Solicitar acceso a la beta</button>
+                <button type="submit" class="btn-primary">Solicitar acceso a la alpha</button>
             </form>
 
             <!-- Success Message (shown after form submission) -->
             <div class="success-message" id="successMsg">
                 <h3>🎉 ¡Gracias por tu interés!</h3>
-                <p>Hemos recibido tu solicitud correctamente. Nuestro equipo revisará tu perfil y nos pondremos en contacto contigo en las próximas 24-48 horas con acceso a la beta privada.</p>
+                <p>Hemos recibido tu solicitud correctamente. Nuestro equipo revisará tu perfil y nos pondremos en contacto contigo en las próximas 24-48 horas con acceso a la alpha privada.</p>
                 <button onclick="document.getElementById('successMsg').classList.remove('show'); window.scrollTo({top:0,behavior:'smooth'});" class="btn-primary">Volver al inicio</button>
             </div>
         </div>
@@ -512,7 +512,7 @@
 
     <script>
         // Form submission with AJAX (no redirect)
-        document.getElementById('betaForm').addEventListener('submit', function(e) {
+        document.getElementById('alphaForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
             if (!document.getElementById('privacidad').checked) {
@@ -547,3 +547,16 @@
     </script>
 </body>
 </html>
+<style>
+/* Responsive grids: 4 cols desktop, 2 cols tablet, 1 col mobile */
+@media (max-width: 1024px) {
+    .problem-grid, .features-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+@media (max-width: 768px) {
+    .problem-grid, .features-grid {
+        grid-template-columns: 1fr !important;
+    }
+}
+</style>
